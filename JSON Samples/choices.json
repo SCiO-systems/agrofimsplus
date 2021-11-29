@@ -1,0 +1,29 @@
+{
+    "choices" : [
+        {
+            "list_name" : "Parameters" ,
+            "options" : [
+                {
+                    "name" : "plantVigor" ,
+                    "label" : "Plant vigor scoring"
+                } ,
+                {
+                    "name" : "weeds" ,
+                    "label" : "Weed scoring"
+                } ,
+                {
+                    "name" : "PD" ,
+                    "label" : "Pest and disease scoring"
+                } ,
+                {
+                    "name" : "plantStand" ,
+                    "label" : "Plant stand"
+                } ,
+                {
+                    "name" : "tuberYield" ,
+                    "label" : "Tuber yield"
+                }
+            ]
+        }
+    ]
+}

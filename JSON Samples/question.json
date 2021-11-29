@@ -1,0 +1,23 @@
+{
+  "question" : {
+    "agrofims" : {
+      "id" : 123,
+      "version" : 1
+    },
+    "type" : "integer",
+    "name" : "tubersNr",
+    "label" : "Number of tubers (total)",
+    "hint" : "Tuber quality (size, shape and disease damage) is not taken into account.",
+    "constraint" : ".>=0 and .<2000",
+    "constraint_message" : "Enter '0' (zero) if there are no tubers.",
+    "required" : true,
+    "appearance" : "",
+    "default" : "",
+    "relevant" : "",
+    "choice_filter" : "",
+    "read_only" : false,
+    "calculation" : "",
+    "repeat_count" : "",
+    "image" : ""
+  }
+}
