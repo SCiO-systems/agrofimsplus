@@ -1,0 +1,73 @@
+# For more information: https://laravel.com/docs/sail
+version: "3"
+services:
+  laravel.test:
+    platform: linux/x86_64
+    image: "laravelsail:php80-composer-mongodb"
+    ports:
+      - "${APP_PORT:-80}:80"
+    environment:
+      WWWUSER: "${WWWUSER}"
+      LARAVEL_SAIL: 1
+    volumes:
+      - ".:/var/www/html"
+    networks:
+      - sail
+    depends_on:
+      - mysql
+  mysql:
+    platform: linux/x86_64
+    image: "mysql:8.0"
+    ports:
+      - "${FORWARD_DB_PORT:-3306}:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: "${DB_PASSWORD}"
+      MYSQL_DATABASE: "${DB_DATABASE}"
+      MYSQL_USER: "${DB_USERNAME}"
+      MYSQL_PASSWORD: "${DB_PASSWORD}"
+      MYSQL_ALLOW_EMPTY_PASSWORD: "yes"
+    volumes:
+      - "sailmysql:/var/lib/mysql"
+    networks:
+      - sail
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-p${DB_PASSWORD}"]
+      retries: 3
+      timeout: 5s
+  mongodb:
+    platform: linux/x86_64
+    image: "mongo:4.4.6"
+    ports:
+      - "${FORWARD_MONGODB_PORT:-27017}:27017"
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: "${DB_USERNAME}"
+      MONGO_INITDB_ROOT_PASSWORD: "${DB_PASSWORD}"
+      MONGO_INITDB_DATABASE: "${DB_DATABASE}"
+    volumes:
+      - "sailmongodb:/data/db"
+    networks:
+      - sail
+  redis:
+    platform: linux/x86_64
+    image: "redis:alpine"
+    ports:
+      - "${FORWARD_REDIS_PORT:-6379}:6379"
+    volumes:
+      - "sailredis:/data"
+    networks:
+      - sail
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      retries: 3
+      timeout: 5s
+
+networks:
+  sail:
+    driver: bridge
+volumes:
+  sailmysql:
+    driver: local
+  sailmongodb:
+    driver: local
+  sailredis:
+    driver: local

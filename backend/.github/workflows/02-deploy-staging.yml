@@ -1,0 +1,19 @@
+name: Staging deployment
+
+on:
+  push:
+    branches: [develop]
+
+jobs:
+  deploy:
+    name: Deploy to staging environment
+    runs-on: ubuntu-latest
+    steps:
+      - name: SSH and deploy to staging environment
+        uses: noeticblue/ssh-action@master
+        with:
+          script: bash /home/scio/sbin/deploy-fairscribe-backend.sh
+          host: ${{ secrets.STAGING_HOST }}
+          port: ${{ secrets.STAGING_PORT }}
+          username: ${{ secrets.STAGING_USER }}
+          key: ${{ secrets.STAGING_PRIVATE_KEY }}
